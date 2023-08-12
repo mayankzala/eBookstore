@@ -1,0 +1,82 @@
+{% extends 'home.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='search_book.css')}}">
+{%endblock%}
+{%block screen%}
+<div class="search_screen border">
+        <form action="/search_book" method="post" class="search_book border">
+                <p>
+                        Book Category<br> (eg.Fiction,Non-Fiction,Class Specific): <br>
+                        <br><select name="book_category" id="book_category" onchange="change_menu()">
+                                <option value="none">---   ------</option>
+                                <option value="Fiction">Fiction</option>
+                                <option value="Non_Fiction">Non_Fiction</option>
+                                <option value="Textbook_Class_10">Textbook_Class_10</option>
+                                <option value="Textbook_Class_11">Textbook_Class_11</option>
+                                <option value="Textbook_Class_12">Textbook_Class_12</option>
+                        </select>
+                </p>
+                <p>
+
+                        Book Sub-Category <br> (eg.Story,Drama,Physics(XI)): <br>
+                        <br><select name="book_subcategory" id="book_subcategory"></select>
+                </p>
+                <button type="submit">SEARCH</button>
+        </form>
+        <h1>Result:</h1>
+        <hr>
+        <section id="screen" class="justify_center align_center border">
+                {% for book in parameter['bookList']%}
+                <a href="book_detail_{{book['book_id']}}" class="link">
+                        <div class="book border">
+                                <div id="book_detail" class=" align_center justify_center">
+                                        <img src="data:image;charset=utf-8;base64,{{book['cover_image']}}"
+                                                alt="img not found" id="cover_page">
+                                        <p id='title'>{{book['book_title']}} </p>
+                                        <i>By {{book['book_author']}}</I>
+                                </div>
+                                <div class="two_button">
+                                        {%if parameter['isLogIn']!=-1%}
+                                        <a href="read_now_{{book['book_id']}}" target="_blank"><button type="button" class="read font">READ</button></a>
+                                        {%endif%}
+                                        <a href="purchase_book_{{book['book_id']}}" target="_blank"><button type="button" class="read font">PURCHASE</button></a>
+                                </div>
+                        </div>
+                </a>
+                {% endfor %}
+        </section>
+</div>
+
+{%endblock %}
+{%block script%}
+<script>
+        var app2=angular.module("l_app",[])
+        app2.controller('l_controller',($scope)=>{
+        });
+
+        var book_cate={
+                        Fiction:['Classic','Tragedy','Sci_Fi','Fantasy','Action and Advanture','Romance','Humour and Satire','Crime & Mystery','Horror','Comics'],
+                        Non_Fiction:['Biography and Autobiography','Memoirs','Cookbooks','True Stories'],
+                        Textbook_Class_10:['Mathematics-X','Physics-X','Chemistry-X','Biology-X','English-X'],
+                        Textbook_Class_11:['Mathematics-XI','Physics-X','Chemistry-XI','Biology-XI','English-XI'],
+                        Textbook_Class_12:['Mathematics-XII','Physics-XII','Chemistry-XII','Biology-XII','English-XII']
+        }
+        function change_menu(){
+                var book_category=document.getElementById('book_category').value
+                var book_subcategory=document.getElementById('book_subcategory');
+                var l=book_cate[book_category]
+                book_subcategory.innerHTML=""
+                
+                var new_option=document.createElement("option")
+                new_option.value='none'
+                new_option.innerHTML="---- ------"
+                book_subcategory.options.add(new_option);
+                for(var i in l){
+                        var new_option=document.createElement("option");
+                        new_option.value=l[i]
+                        new_option.innerHTML=l[i]
+                        book_subcategory.options.add(new_option);
+                }
+        }
+</script>
+{%endblock%}

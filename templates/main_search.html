@@ -1,0 +1,49 @@
+{% extends 'home.html' %}
+{%block screen%}
+{%if all_book==1%}
+<div class="">
+<section id="screen" class="justify_center align_center border">
+{% for book in parameter['bookList']%}
+                    <a href="book_detail_{{book['book_id']}}" class="link">
+                        <div class="book border" >
+                            <div id="book_detail" class=" align_center justify_center">
+                                <img src="data:image;charset=utf-8;base64,{{book['cover_image']}}" alt="img not found" id="cover_page">
+                                <p id='title'>{{book['book_title']}} </p>
+                                <i>By {{book['book_author']}}</I>
+                                </div>
+                                <div class="two_button" >
+                                    {%if parameter['isLogIn']!=-1%}
+                                    <a href="read_now_{{book['book_id']}}" target="_blank"><button type="button" class="read font" >READ</button></a>
+                                    {%endif%}
+                                    <a href="purchase_book_{{book['book_id']}}" ><button type="button" class="read font" >PURCHASE</button></a>
+                                </div>
+                            </div>
+                    </a>
+{% endfor %}
+</section>
+</div>
+{%else%}
+<div class="">
+
+    <section id="screen" class="justify_center align_center border">
+        {% for book in parameter['bookList']%}
+        <a href="book_detail_{{book['book_id']}}" class="link">
+            <div class="book border" >
+                <div id="book_detail" class=" align_center justify_center">
+                    <img src="data:image;charset=utf-8;base64,{{book['cover_image']}}" alt="img not found" id="cover_page">
+                    <p id='title'>{{book['book_title']}} </p>
+                    <i>By {{book['book_author']}}</I>
+                    </div>
+                    <div class="two_button" >
+                        {%if parameter['isLogIn']!=-1%}
+                        <a href="read_now_{{book['book_id']}}" target="_blank"><button type="button" class="read font" >READ</button></a>
+                        {%endif%}
+                        <a href="purchase_book_{{book['book_id']}}" ><button type="button" class="read font" >PURCHASE</button></a>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        </section>
+</div>
+{%endif%}
+{%endblock %}

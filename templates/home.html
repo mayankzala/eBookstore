@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"  >
+
+<head>
+    <meta  charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='utility.css')}}">
+    <script   src="{{url_for('static',filename='js/angular.js')}}"></script>
+    <!-- <script src="../static/angular.js"></script> -->
+    {%block style%}
+    
+    {%endblock%}
+    <title>Let's start Reading</title>
+</head>
+
+<body ng-app="l_app" ng-controller="l_controller">
+    <div id="container">
+        <!-- header -->
+        <header id="header">
+            <div class="navbar align_center ">
+                <div class="">
+                    <img src=" {{url_for('static',filename='images/library.png')}}" alt="image not found" class="logo">
+                </div>
+                <div class="search_bar " >
+                    <form action="/main_search" method="post">
+                    <div class="search">
+                            <input type="text" name="search_book" placeholder="Search The Book You Want">
+                            <button type="submit"> SEARCH</button>
+                        </div>
+                    </form>
+                    
+                    {%block header%}
+                    <div  id="login2">
+
+                        <a href="slogin"  ng-class="{ 'div_disable' : {% if parameter['isLogIn']!=1 %}false{%else%}true{% endif %}}" id="slogin">
+                            <div class="login align_center justify_center ">
+                                <img src="{{url_for('static',filename='images/student.jpeg')}}" alt="img not found">
+                                {{parameter['student']}}
+                            </div>
+                        </a>
+                        <a href="login"  ng-class="{ 'div_disable' : {% if parameter['isLogIn']!=0 %}false{%else%}true{% endif %}}" id="alogin">
+                            <div class="login align_center justify_center ">
+                                <img src="{{url_for('static',filename='images/admin.jpeg')}}" alt="img not found">
+                                {{parameter['admin']}}
+                            </div>
+                        </a>
+                        {%if parameter['isLogIn']==1 or parameter['isLogIn']==0%}
+                        <a href="logout_{{parameter['isLogIn']}}" ng-click='student=false;admin=false' >
+                            <button class="logout font ">LOGOUT</button>
+                        </a>
+                    </div>
+                    {%endif%}
+                    {%endblock%}
+                </div>
+            </div>
+            
+        </header>
+
+        <!-- Navigation -->
+        <section id="sidebar">
+            {%block nav%}
+                {%if parameter['isLogIn']!=1%}
+                    <a class="menu align_center justify_center" href="/">Dashboard</a>
+                    <a class="menu align_center justify_center" href="/main_search">All books</a>
+                    <a class="menu align_center justify_center" href="/search_book">Search Book</a>
+                    <a class="menu align_center justify_center" href="/order_detail">Order Details</a>
+                    
+                    {% elif parameter['isLogIn']==1 %}
+                    <a href="/" class="menu align_center justify_center">Dashboard  </a>
+                    <a href="admin_dashboard" class="menu align_center justify_center" >Show All Books</a>
+                    <a href="admin_dashboard_add_book" class="menu align_center justify_center" >Add Book</a>
+                    <a href="/main_search" class="menu align_center justify_center">All books</a>
+                    <a href="/search_book" class="menu align_center justify_center">Search Book</a>
+                    <a href="/order_detail" class="menu align_center justify_center">Order Details</a>
+
+                {%endif%}
+            {%endblock%}
+        </section>
+        <!-- Display -->
+
+        <section class="" id="main_screen">
+            {%block screen%}
+            <div class="">
+
+                <h1>Recent Viewed: </h1>
+                <hr>
+                <section id="screen" class="justify_center align_center border">
+                    {% for book in parameter['bookList']%}
+                    <a href="book_detail_{{book['book_id']}}" class="link">
+                        <div class="book border" >
+                            <div id="book_detail" class=" align_center justify_center">
+                                <img src="data:image;charset=utf-8;base64,{{book['cover_image']}}" alt="img not found" id="cover_page">
+                                <p id='title'>{{book['book_title']}} </p>
+                                <i>By {{book['book_author']}}</I>
+                                </div>
+                                <div class="two_button" >
+                                    {%if parameter['isLogIn']!=-1%}
+                                    <a href="read_now_{{book['book_id']}}" target="_blank"><button type="button" class="read font" >READ</button></a>
+                                    {%endif%}
+                                    <a href="purchase_book_{{book['book_id']}}" ><button type="button" class="read font" >PURCHASE</button></a>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                </section>
+
+                <h1>Recommendation</h1>
+                <hr>
+                <section id="screen" class="justify_center align_center border">
+                    {% for book2 in parameter['bookList2']%}
+                    <a href="book_detail_{{book2['book_id']}}" class="link">
+                        <div class="book border" >
+                            <div id="book_detail" class=" align_center justify_center">
+                                <img src="data:image;charset=utf-8;base64,{{book2['cover_image']}}" alt="img not found" id="cover_page">
+                                <p id='title'>{{book2['book_title']}} </p>
+                                <i>By {{book2['book_author']}}</I>
+                            </div>
+                            <div class="two_button" >
+                                {%if parameter['isLogIn']!=-1%}
+                                <a href="read_now_{{book2['book_id']}}" target="_blank"><button type="button" class="read font" >READ</button></a>
+                                {%endif%}
+                                <a href="purchase_book_{{book2['book_id']}}" ><button type="button" class="read font" >PURCHASE</button></a>
+                            </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </section>         
+            </div>
+            {%endblock %}
+        </section>
+
+    </div>
+    
+    {%block script%}
+    <script>
+        var app=angular.module('l_app',[])
+        app.controller('l_controller',($scope)=>{
+            
+        });
+        </script>
+    {%endblock%}
+</body>
+
+</html>

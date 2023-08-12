@@ -1,0 +1,39 @@
+.search_screen{
+    padding: 2vw;
+    background-color: white;
+}
+.search_screen .search_book{
+    padding: 2vw;
+    display: flex;
+    align-items: center;
+    background-color: rgb(244, 201, 145);
+    border-radius: 1vw;
+    
+}
+.search_screen #screen{
+    background-color: white;
+}
+.search_screen .search_book p{
+    width: 25vw;
+    margin: 1vw;
+    background-color:white;
+    border: 1px solid black;
+    padding: 0.8vw;
+    border-radius: 1vw;
+}
+.search_screen .search_book button{
+    width: 10vw;
+    border-radius:0.5vw ;
+    height: 5vh;
+    cursor: pointer;
+}
+.search_screen .search_book button:hover{
+    background-color: rgb(240, 227, 227);
+}
+.search_book select{
+    background-color: rgb(243, 241, 237);
+    font-size: 1.2vw;
+    width: 24vw;
+    height: 2.3vw;
+    border-radius: 0.5vw;
+}

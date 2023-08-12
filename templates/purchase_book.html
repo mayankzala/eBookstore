@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='purchase_book.css')}}">
+{%endblock%}
+{%block screen%}
+<!-- <div class="purchase_form"> -->
+    {% if status==0 %}
+    <h1>{{order_status}}</h1>
+    {%else%}
+    <form action="/purchase_book_{{parameter['bookList'][0]['book_id']}}" method="post" class="purchase_form">
+        <div class="order_detail">
+            <p>
+                First Name:<br>
+                <input type="text" id="first_name" name="first_name" required>
+            </p>
+            <p>
+                Last Name:<br>
+                <input type="text" id="last_name" name="last_name" required>
+            </p>
+            <p>
+                Email Id:<br>
+                <input type="email" id="email" name="email" required>
+            </p>
+            <p>
+                Address:<br>
+                <textarea name="address" id="address" cols="30" rows="10" required></textarea>
+            </p>
+        </div>
+        <div class="price_detail">
+            <p>
+                Book Title:<br>
+                <input type="text" id="book_title" name="book_title" required>
+            </p>
+            <p>
+                Book Author:<br>
+                <input type="text" id="book_author" name="book_author" required>
+            </p>
+            <div > 
+                <p>
+                Price:{{parameter['bookList'][0]['price']}}₹
+                </p>
+                <img src="data:image;charset=utf-8;base64,{{parameter['bookList'][0]['cover_image']}}" alt="img not found" id="cover_page">
+            </div>
+            <p id="button">
+                <button type="submit" class="font bold"  id="register_button">ORDER</button>
+            </p>
+        </div>
+    </form>
+    {%endif%}
+<!-- </div> -->
+{%endblock %}
+{%block script%}
+<script>
+    document.getElementById("first_name").value="{{parameter['login_detail']['first_name']}}"
+    document.getElementById("last_name").value="{{parameter['login_detail']['last_name']}}"
+    document.getElementById("email").value="{{parameter['login_detail']['email']}}"
+    document.getElementById("book_title").value="{{parameter['bookList'][0]['book_title']}}"
+    document.getElementById("book_author").value="{{parameter['bookList'][0]['book_author']}}"
+    var app2 = angular.module("l_app", [])
+    app2.controller('l_controller', ($scope) => {
+    });
+</script>
+{%endblock%}

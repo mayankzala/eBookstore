@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='book_detail.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='utility.css')}}">
+{%endblock%}
+
+
+{%block screen%}
+<div class="book_detail_frame border font">
+    <div class="cover_photo  align_center justify_center">
+        <img src="data:image;charset=utf-8;base64,{{parameter['bookList'][0]['cover_image']}}" alt="img not found" id="cover_page">
+                        
+    </div>
+    <div class="title_detail ">
+        <h1>{{parameter['bookList'][0]['book_title']}}</h1>
+        <i>By {{parameter['bookList'][0]['book_author']}}</i>
+        <p><i>Category:</i> {{parameter['bookList'][0]['book_category']}}</p>
+        <p><i>Sub-Category:</i> {{parameter['bookList'][0]['book_subcategory']}}</p>
+        <h3>Price: <i>{{parameter['bookList'][0]['price']}}₹</i></h3>
+        {%if parameter['isLogIn']!=-1%}
+        <a href="read_now_{{parameter['bookList'][0]['book_id']}}" target="_blank"><button type="submit">READ</button></a> 
+        <a href="book_download_{{parameter['bookList'][0]['book_id']}}"><button type="submit" >DOWNLOAD</button></a>
+        {%endif%}
+        <a href="purchase_book_{{parameter['bookList'][0]['book_id']}}"><button type="submit" >PURCHASE</button></a>
+    </div>
+    <div class="book_intro ">
+        <h2>Introduction to Author</h2>
+        <p>{{parameter['bookList'][0]['about_author']}}</p>
+        <h2>Introduction to Book</h2>
+        <p>{{parameter['bookList'][0]['about_book']}}</p>
+    </div>
+</div>
+{%endblock%}

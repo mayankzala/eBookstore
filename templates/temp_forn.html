@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="{{url_for('static',filename='js/angular.js')}}"> </script>
+</head>
+
+<body>
+    <div ng-app="l_app" ng-controller="l_controller">
+        <form action="/" method="post">
+            <input type="text" name="maku">
+        <select name="name" id="" ng-options="j.category for j in book_cate" ng-model="name['category']">
+        </select>
+        <p ng-bind="name"></p>
+        <select name="s_name" id="" ng-options="j for j in name.subcategory" ng-model="s_name"></select>
+        <button type="submit" ng-click="submit()">SUBMIT</button>
+        </form>
+    </div>
+    <script>
+        var app2 = angular.module("l_app", [])
+        app2.controller('l_controller', ($scope, $http) => {
+            $scope.book_cate = [
+                {
+                    category: "Fiction",
+                    subcategory: ['Classic', 'Tragedy', 'Sci_Fi', 'Fantasy', 'Action and Advanture', 'Romance', 'Humour and Satire', 'Crime & Mystery', 'Horror', 'Comics']
+                },
+                {
+
+                    category: "Non-Fiction",
+                    subcategory: ['Biography and Autobiography', 'Memoirs', 'Cookbooks', 'True Stories']
+                }
+            ]
+            // $scope.name = ''
+            $scope.submit = function () {
+                // var data = {
+                //     name: $scope.name
+                // };
+                var data = $scope.name
+                console.log(data)
+                console.log("------")
+                $http.post('/', JSON.stringify(data), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                }, function (error) {
+                    console.log(error);
+                });
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+.border{
+    border:2px solid black
+}
+.align_center{
+    align-items: center;
+}
+.justify_center{
+    justify-content: center
+}
+.font{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.bold{
+    font-weight: bold;
+}

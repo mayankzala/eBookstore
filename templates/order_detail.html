@@ -1,0 +1,55 @@
+{% extends 'home.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='order_detail.css')}}">
+{%endblock%}
+
+{%block screen%}
+{%if order==0%}
+<h1>
+    {{order_d_status}}
+</h1>
+{%else%}
+<div class="all_order border general">
+    <h1>Order Details</h1>
+        {% set count = 0 %}
+        {% for ord in all_order%}
+        <hr style="color:black">
+        <div class="order border general">
+            <div class="personal_detail  general">
+                <p>
+                    <b><i>Name</i></b>:{{ord['first_name']}} {{ord['last_name']}}
+                </p>
+                <p>
+                    <b><i>Email</i></b>:{{ord['email']}}
+
+                </p>
+                <p>
+                    <b><i>Address</i></b>:{{ord['address']}}
+                </p>
+            </div>
+            <div class="book_detail  general">
+                <div class="">
+
+                    <p>
+                        <b><i>Book Title</i></b>:{{ord['book_title']}}
+                    </p>
+                    <p>
+                        <b><i>Book Author</i></b>:{{ord['book_author']}}
+                    </p>
+                    <p>
+                        <b><i>Book Price</i></b>:{{ord['price']}}₹
+                    </p>
+                    <p>
+                        <b><i>Place On</i></b>:{{ord['date']}}
+                    </p>
+                </div>
+                <div class="photo ">
+                    <img src="data:image;charset=utf-8;base64,{{parameter['bookList'][loop.index-1]['cover_image']}}" alt="img not found" id="cover_page">
+                    {% set count=count+loop.index%}
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    {%endif%}
+{%endblock %}

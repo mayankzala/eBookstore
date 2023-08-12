@@ -1,0 +1,36 @@
+.all_order{
+    /* display: flex;
+    flex-direction: column; */
+    background-color: rgb(255, 249, 240);
+}
+.all_order .order{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: bisque;
+}
+.all_order .order .book_detail{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+/* .all_order .order .book_detail .photo{
+    width: 10vw;
+    height: 15vw;
+} */
+.all_order .order .book_detail .photo img{
+    width: 11vw;
+    height: 15vw;
+    border-radius: 0.5vw;
+}
+.all_order .order p{
+    width: 25vw;
+} 
+.general{
+    border-radius: 0.8vw;
+    padding: 1vw;
+}
+.all_order .order p{
+    display: flex;
+}

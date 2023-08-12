@@ -1,0 +1,76 @@
+{% extends 'home.html' %}
+{%block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='login_style.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='utility.css')}}">
+{%endblock%}
+
+{%block screen%}
+<div class="form border font">
+    <!-- for student registration -->
+    {%if  temp=='register'%}
+        <img src="{{url_for('static',filename='images/student.jpeg')}}" alt="" >
+        <h1 style="margin:0px;">Student</h1>
+        <form action="register" method="post" id="register_form">
+            <p >
+                First Name:<br>
+                <input type="text" id="first_name" name="first_name" required>
+            </p>
+            <p >
+                Last Name:<br>
+                <input type="text" id="last_name" name="last_name" required>
+            </p>
+            <p>
+                Email Id:<br>
+                <input type="email" id="email" name="email" required>
+            </p>
+            <p>
+                password:<br>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <p>
+                Re-enter password:<br>
+                <input type="password" id="re_password" name="re_password" required>
+            </p>
+            
+            <button type="submit" class="font bold"  onclick="check()" id="register_button">REGISTER</button>
+        </form>
+        <!-- for admin -->
+    {%elif temp=='admin'%}
+        <img src="{{url_for('static',filename='images/admin.jpeg')}}" alt="" >
+        <h1 style="margin:0px;">Admin</h1>
+        <form action="login" method="post">
+
+            <p >
+                Email:<br>
+                <input type="email" id="email" name="email" required>
+            </p>
+            <p>
+                password:<br>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <button type="submit" class="font bold" ng-disabled="{% if parameter['isLogIn']==1 %}true{%else%}false{% endif %}"  >ADMIN LOGIN</button>
+            <!-- <h1>Dont' have account?</h1><a href="register">Register here</a> -->
+        </form>
+    <!-- .for student -->
+    {%else%}
+        <img src="{{url_for('static',filename='images/student.jpeg')}}" alt="" >
+        <h1 style="margin:0px;">Student</h1>
+        <form action="slogin" method="post">
+
+            <p >
+                Email:<br>
+                <input type="email" id="email" name="email" required>
+            </p>
+            <p>
+                password:<br>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <button type="submit" class="font bold" ng-disabled="{% if parameter['isLogIn']==0 %}true{%else%}false{% endif %}">LOGIN</button>
+            <h1>Dont' have account?</h1><a href="register">Register here</a>
+        </form>
+    {%endif%}
+    <i style="color:red"> {{login_status}} </i> 
+</div>
+{%endblock %}
+
+<!-- if want to add some javascript u can add here -->
